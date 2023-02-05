@@ -1,5 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
+import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectSourceOrderIdException;
+
 import java.util.Objects;
 
 public final class SourceOrderId {
@@ -39,9 +41,4 @@ public final class SourceOrderId {
                 '}';
     }
 
-    public static class IncorrectSourceOrderIdException extends Exception {
-        private IncorrectSourceOrderIdException(long value) {
-            super(String.format("Given source order id = %d is incorrect", value));
-        }
-    }
 }

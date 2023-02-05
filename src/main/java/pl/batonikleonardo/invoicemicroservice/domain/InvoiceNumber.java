@@ -1,5 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
+import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectInvoiceNumberException;
+
 import java.util.Objects;
 
 public final class InvoiceNumber {
@@ -39,9 +41,4 @@ public final class InvoiceNumber {
     }
 
 
-    static class IncorrectInvoiceNumberException extends Exception {
-        private IncorrectInvoiceNumberException(String invoiceNumber) {
-            super(String.format("Given invoice number = %s is incorrect", invoiceNumber));
-        }
-    }
 }

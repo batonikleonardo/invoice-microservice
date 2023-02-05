@@ -1,5 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
+import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectInvoiceItemException;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -77,9 +79,4 @@ public final class InvoiceItem {
     }
 
 
-    public static class IncorrectInvoiceItemException extends Exception {
-        private IncorrectInvoiceItemException(String itemName) {
-            super(String.format("Incorrect item row data with name = %s", itemName));
-        }
-    }
 }

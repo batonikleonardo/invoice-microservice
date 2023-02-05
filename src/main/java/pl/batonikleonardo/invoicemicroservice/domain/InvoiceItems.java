@@ -3,6 +3,7 @@ package pl.batonikleonardo.invoicemicroservice.domain;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class InvoiceItems {
     private final List<InvoiceItem> itemList;
@@ -28,5 +29,28 @@ public final class InvoiceItems {
 
     public List<InvoiceItem> asList() {
         return itemList;
+    }
+
+    public void addAll(List<InvoiceItem> invoiceItems) {
+        this.itemList.addAll(invoiceItems);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InvoiceItems that)) return false;
+        return Objects.equals(itemList, that.itemList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemList);
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceItems{" +
+                "itemList=" + itemList +
+                '}';
     }
 }

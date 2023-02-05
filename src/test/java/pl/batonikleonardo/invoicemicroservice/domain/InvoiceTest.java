@@ -1,6 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
 import org.junit.jupiter.api.Test;
+import pl.batonikleonardo.invoicemicroservice.domain.exception.*;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -14,12 +15,12 @@ class InvoiceTest {
     void whenBuildEmptyInvoiceThenThrowException() {
         final InvoiceBuilder invoiceBuilder = Invoice.builder();
 
-        assertThatExceptionOfType(Invoice.invoiceMissingOrIncorrectFieldException.class)
+        assertThatExceptionOfType(InvoiceMissingOrIncorrectFieldException.class)
                 .isThrownBy(invoiceBuilder::build);
     }
 
     @Test
-    void buildInvoiceHasAllData() throws InvoiceNumber.IncorrectInvoiceNumberException, InvoiceDate.InvoiceDataIsPastException, SourceOrderId.IncorrectSourceOrderIdException, InvoiceItem.IncorrectInvoiceItemException, InvoiceInformation.IncorrectInvoiceInformationPartException {
+    void buildInvoiceHasAllData() throws IncorrectInvoiceNumberException, InvoiceDataIsPastException, IncorrectSourceOrderIdException, IncorrectInvoiceItemException, IncorrectInvoiceInformationPartException {
         //given
         final ZonedDateTime invoiceDateTime = ZonedDateTime.now().plusDays(4);
         final ZonedDateTime paymentDateTime = ZonedDateTime.now().plusDays(12);

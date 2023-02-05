@@ -2,6 +2,7 @@ package pl.batonikleonardo.invoicemicroservice.application;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.batonikleonardo.invoicemicroservice.domain.*;
+import pl.batonikleonardo.invoicemicroservice.domain.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,22 +16,22 @@ public abstract class OrderPaidEventHandler {
         this.invoiceFacade = invoiceFacade;
     }
 
-    void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDate.InvoiceDataIsPastException, InvoiceInformation.IncorrectInvoiceInformationPartException, InvoiceItem.IncorrectInvoiceItemException, SourceOrderId.IncorrectSourceOrderIdException {
+    void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectSourceOrderIdException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
         log.info("Input order paid event = " + orderPaidEvent.toString());
         final InvoiceCreateCommand invoiceCreateCommand = map(orderPaidEvent);
         invoiceFacade.processInvoice(invoiceCreateCommand);
     }
 
-    private InvoiceCreateCommand map(OrderPaidEvent orderPaidEvent) throws InvoiceDate.InvoiceDataIsPastException, SourceOrderId.IncorrectSourceOrderIdException, InvoiceInformation.IncorrectInvoiceInformationPartException, InvoiceItem.IncorrectInvoiceItemException {
+    private InvoiceCreateCommand map(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
         InvoiceDate issuedDate = new InvoiceDate(orderPaidEvent.paidDate());
         InvoiceInformation company = mapInvoiceInformation(orderPaidEvent.company());
         InvoiceInformation client = mapInvoiceInformation(orderPaidEvent.client());
         List<InvoiceItem> invoiceItems = mapItems(orderPaidEvent.items());
         SourceOrderId sourceOrderId = new SourceOrderId(orderPaidEvent.orderId());
-        return new InvoiceCreateCommand(issuedDate, company, client, invoiceItems, sourceOrderId);
+        return new InvoiceCreateCommand(issuedDate, company, client, invoiceItems, orderPaidEvent.tax(), sourceOrderId);
     }
 
-    private InvoiceInformation mapInvoiceInformation(OrderPaidEventEntity orderPaidEventEntity) throws InvoiceInformation.IncorrectInvoiceInformationPartException {
+    private InvoiceInformation mapInvoiceInformation(OrderPaidEventEntity orderPaidEventEntity) throws IncorrectInvoiceInformationPartException {
 
         return new InvoiceInformation(
                 orderPaidEventEntity.name(),
@@ -44,7 +45,7 @@ public abstract class OrderPaidEventHandler {
         );
     }
 
-    private List<InvoiceItem> mapItems(List<OrderItem> orderItemList) throws InvoiceItem.IncorrectInvoiceItemException {
+    private List<InvoiceItem> mapItems(List<OrderItem> orderItemList) throws IncorrectInvoiceItemException {
 
         List<InvoiceItem> list = new ArrayList<>();
         for (OrderItem orderItem : orderItemList) {
@@ -54,7 +55,7 @@ public abstract class OrderPaidEventHandler {
 
     }
 
-    private InvoiceItem mapSingleItem(OrderItem orderItem) throws InvoiceItem.IncorrectInvoiceItemException {
+    private InvoiceItem mapSingleItem(OrderItem orderItem) throws IncorrectInvoiceItemException {
         return new InvoiceItem(orderItem.name(), orderItem.description(), orderItem.quantity(), orderItem.price());
     }
 }
