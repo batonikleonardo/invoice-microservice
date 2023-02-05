@@ -1,5 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
+import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectInvoiceInformationPartException;
+
 import java.util.Objects;
 
 public final class InvoiceInformation {
@@ -123,11 +125,5 @@ public final class InvoiceInformation {
                 "taxIdentificationNumber=" + taxIdentificationNumber + ']';
     }
 
-
-    public static class IncorrectInvoiceInformationPartException extends Exception {
-        private IncorrectInvoiceInformationPartException(String name, String value) {
-            super(String.format("Incorrect invoice information : %s = %s", name, value));
-        }
-    }
 
 }

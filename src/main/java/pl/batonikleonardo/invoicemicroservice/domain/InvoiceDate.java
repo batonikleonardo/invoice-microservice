@@ -1,5 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
+import pl.batonikleonardo.invoicemicroservice.domain.exception.InvoiceDataIsPastException;
+
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -40,9 +42,4 @@ public final class InvoiceDate {
     }
 
 
-    public static class InvoiceDataIsPastException extends Exception {
-        private InvoiceDataIsPastException(ZonedDateTime invoiceDateTime) {
-            super(String.format("Entered invoice date = %s is past", invoiceDateTime));
-        }
-    }
 }

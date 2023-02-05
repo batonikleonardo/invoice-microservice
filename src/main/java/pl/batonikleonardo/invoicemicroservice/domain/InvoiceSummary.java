@@ -1,5 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
+import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectInvoiceSummaryException;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -23,10 +25,6 @@ final class InvoiceSummary {
         return invoiceItems.isEmpty() && taxValue <= 0;
     }
 
-    InvoiceItems invoiceItems() {
-        return invoiceItems;
-    }
-
     BigDecimal taxValue() {
         return taxValue;
     }
@@ -35,12 +33,21 @@ final class InvoiceSummary {
         return taxValue.doubleValue();
     }
 
+    BigDecimal subtotal() {
+        return invoiceItems.totalPrice();
+    }
+
+    BigDecimal total() {
+        final BigDecimal calculatedTaxValue = invoiceItems.totalPrice().multiply(this.taxValue).movePointLeft(2);
+        return invoiceItems.totalPrice().add(calculatedTaxValue);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (InvoiceSummary) obj;
-        return Objects.equals(this.invoiceItems, that.invoiceItems) &&
+        return Objects.equals(this.subtotal(), that.subtotal()) &&
                 Objects.equals(this.taxValue, that.taxValue);
     }
 
@@ -54,20 +61,5 @@ final class InvoiceSummary {
         return "InvoiceSummary[" +
                 "invoiceItems=" + invoiceItems + ", " +
                 "taxValue=" + taxValue + ']';
-    }
-
-    BigDecimal subtotal() {
-        return invoiceItems.totalPrice();
-    }
-
-    BigDecimal total() {
-        final BigDecimal calculatedTaxValue = invoiceItems.totalPrice().multiply(this.taxValue).movePointLeft(2);
-        return invoiceItems.totalPrice().add(calculatedTaxValue);
-    }
-
-
-    static class IncorrectInvoiceSummaryException extends Exception {
-        private IncorrectInvoiceSummaryException(double taxValue) {
-        }
     }
 }

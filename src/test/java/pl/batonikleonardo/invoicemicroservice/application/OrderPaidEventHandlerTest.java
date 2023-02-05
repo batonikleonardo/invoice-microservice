@@ -7,6 +7,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.batonikleonardo.invoicemicroservice.domain.*;
+import pl.batonikleonardo.invoicemicroservice.domain.exception.*;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -27,11 +28,11 @@ class OrderPaidEventHandlerTest {
     private ArgumentCaptor<InvoiceCreateCommand> invoiceCreateCommandArgumentCaptor;
 
     @Test
-    void handle() throws InvoiceDate.InvoiceDataIsPastException, InvoiceInformation.IncorrectInvoiceInformationPartException, InvoiceItem.IncorrectInvoiceItemException, SourceOrderId.IncorrectSourceOrderIdException {
+    void handle() throws InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectSourceOrderIdException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
         //given
         final OrderPaidEventHandler orderPaidEventHandler = new OrderPaidEventHandler(invoiceFacade) {
             @Override
-            void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDate.InvoiceDataIsPastException, InvoiceInformation.IncorrectInvoiceInformationPartException, InvoiceItem.IncorrectInvoiceItemException, SourceOrderId.IncorrectSourceOrderIdException {
+            void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectSourceOrderIdException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
                 super.handle(orderPaidEvent);
             }
         };
@@ -60,7 +61,7 @@ class OrderPaidEventHandlerTest {
 
         final List<OrderItem> orderItems = List.of(orderItem1, orderItem2, orderItem3);
 
-        final OrderPaidEvent orderPaidEvent = new OrderPaidEvent(orderId, paidDate, company, client, orderItems);
+        final OrderPaidEvent orderPaidEvent = new OrderPaidEvent(orderId, paidDate, company, client, orderItems, 20);
 
         //when
         doNothing().when(invoiceFacade).processInvoice(any(InvoiceCreateCommand.class));
@@ -76,6 +77,7 @@ class OrderPaidEventHandlerTest {
         assertThat(invoiceCreateCommand.issuedDate()).isEqualTo(paidDateAsInvoiceDate);
         assertThat(invoiceCreateCommand.company()).isEqualTo(invoiceCompany);
         assertThat(invoiceCreateCommand.client()).isEqualTo(invoiceClient);
+        assertThat(invoiceCreateCommand.taxValue()).isEqualTo(20);
 
         assertThat(invoiceCreateCommand.invoiceItems()).hasSize(3)
                 .extracting(InvoiceItem::name, InvoiceItem::description, InvoiceItem::quantity, InvoiceItem::totalPrice)

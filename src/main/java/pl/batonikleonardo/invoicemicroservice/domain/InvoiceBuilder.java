@@ -1,13 +1,18 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
+import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectInvoiceSummaryException;
+import pl.batonikleonardo.invoicemicroservice.domain.exception.InvoiceMissingOrIncorrectFieldException;
+
+import java.util.List;
+
 class InvoiceBuilder {
     private InvoiceNumber invoiceNumber;
     private InvoiceDate issuedDate;
     private InvoiceDate paymentTerm;
     private InvoiceInformation company;
     private InvoiceInformation client;
-    private InvoiceItems invoiceItems;
-    double taxValue;
+    private final InvoiceItems invoiceItems;
+    private double taxValue;
 
     private SourceOrderId sourceOrderId;
 
@@ -50,7 +55,7 @@ class InvoiceBuilder {
         return this;
     }
 
-    public Invoice build() throws Invoice.invoiceMissingOrIncorrectFieldException, InvoiceSummary.IncorrectInvoiceSummaryException {
+    public Invoice build() throws InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
         return new Invoice(invoiceNumber, company, client, issuedDate, paymentTerm, invoiceItems, taxValue, sourceOrderId);
     }
 
@@ -58,4 +63,10 @@ class InvoiceBuilder {
         this.taxValue = taxValue;
         return this;
     }
+
+    public InvoiceBuilder invoiceItems(List<InvoiceItem> invoiceItems) {
+        this.invoiceItems.addAll(invoiceItems);
+        return this;
+    }
+
 }
