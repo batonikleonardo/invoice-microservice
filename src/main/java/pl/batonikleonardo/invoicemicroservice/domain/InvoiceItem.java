@@ -3,13 +3,13 @@ package pl.batonikleonardo.invoicemicroservice.domain;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-final class InvoiceItem {
+public final class InvoiceItem {
     private final String name;
     private final String description;
     private final BigDecimal quantity;
     private final BigDecimal price;
 
-    InvoiceItem(String name, String description, int quantity, BigDecimal price) throws IncorrectInvoiceItemException {
+    public InvoiceItem(String name, String description, int quantity, BigDecimal price) throws IncorrectInvoiceItemException {
         selfValidation(name, quantity, price);
         this.name = name;
         this.description = description;
@@ -17,15 +17,15 @@ final class InvoiceItem {
         this.price = price;
     }
 
-    String name() {
+    public String name() {
         return name;
     }
 
-    String description() {
+    public String description() {
         return description;
     }
 
-    int quantity() {
+    public int quantity() {
         return quantity.intValue();
     }
 
@@ -33,7 +33,7 @@ final class InvoiceItem {
         return price;
     }
 
-    BigDecimal totalPrice() {
+    public BigDecimal totalPrice() {
         return price.multiply(quantity);
     }
 
@@ -77,7 +77,7 @@ final class InvoiceItem {
     }
 
 
-    static class IncorrectInvoiceItemException extends Exception {
+    public static class IncorrectInvoiceItemException extends Exception {
         private IncorrectInvoiceItemException(String itemName) {
             super(String.format("Incorrect item row data with name = %s", itemName));
         }

@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-final class InvoiceItems {
+public final class InvoiceItems {
     private final List<InvoiceItem> itemList;
 
-    InvoiceItems() {
+    public InvoiceItems() {
         this.itemList = new ArrayList<>();
     }
 

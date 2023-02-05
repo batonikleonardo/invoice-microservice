@@ -3,11 +3,11 @@ package pl.batonikleonardo.invoicemicroservice.domain;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-final class InvoiceDate {
+public final class InvoiceDate {
     private final ZonedDateTime invoiceDateTime;
 
-    InvoiceDate(ZonedDateTime invoiceDateTime) throws InvoiceDataIsPastException {
-        selfValidation(invoiceDateTime);
+    public InvoiceDate(ZonedDateTime invoiceDateTime) throws InvoiceDataIsPastException {
+//        selfValidation(invoiceDateTime);
         this.invoiceDateTime = invoiceDateTime;
     }
 
@@ -40,7 +40,7 @@ final class InvoiceDate {
     }
 
 
-    static class InvoiceDataIsPastException extends Exception {
+    public static class InvoiceDataIsPastException extends Exception {
         private InvoiceDataIsPastException(ZonedDateTime invoiceDateTime) {
             super(String.format("Entered invoice date = %s is past", invoiceDateTime));
         }
