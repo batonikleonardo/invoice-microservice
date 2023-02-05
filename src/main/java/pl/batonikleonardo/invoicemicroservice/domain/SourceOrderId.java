@@ -2,10 +2,10 @@ package pl.batonikleonardo.invoicemicroservice.domain;
 
 import java.util.Objects;
 
-final class SourceOrderId {
+public final class SourceOrderId {
     private final long value;
 
-    SourceOrderId(long value) throws IncorrectSourceOrderIdException {
+    public SourceOrderId(long value) throws IncorrectSourceOrderIdException {
         selfValidation(value);
         this.value = value;
     }
@@ -39,7 +39,7 @@ final class SourceOrderId {
                 '}';
     }
 
-    static class IncorrectSourceOrderIdException extends Exception {
+    public static class IncorrectSourceOrderIdException extends Exception {
         private IncorrectSourceOrderIdException(long value) {
             super(String.format("Given source order id = %d is incorrect", value));
         }

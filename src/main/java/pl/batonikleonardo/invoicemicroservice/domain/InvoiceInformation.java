@@ -2,7 +2,7 @@ package pl.batonikleonardo.invoicemicroservice.domain;
 
 import java.util.Objects;
 
-final class InvoiceInformation {
+public final class InvoiceInformation {
     private final String name;
     private final String email;
     private final String address;
@@ -12,8 +12,8 @@ final class InvoiceInformation {
     private final String country;
     private final String taxIdentificationNumber;
 
-    InvoiceInformation(String name, String email, String address, String city, String postalCode, String province,
-                       String country, String taxIdentificationNumber) throws IncorrectInvoiceInformationPartException {
+    public InvoiceInformation(String name, String email, String address, String city, String postalCode, String province,
+                              String country, String taxIdentificationNumber) throws IncorrectInvoiceInformationPartException {
         selfValidation(name, email, address, city, postalCode, province, country, taxIdentificationNumber);
         this.name = name;
         this.email = email;
@@ -124,7 +124,7 @@ final class InvoiceInformation {
     }
 
 
-    static class IncorrectInvoiceInformationPartException extends Exception {
+    public static class IncorrectInvoiceInformationPartException extends Exception {
         private IncorrectInvoiceInformationPartException(String name, String value) {
             super(String.format("Incorrect invoice information : %s = %s", name, value));
         }

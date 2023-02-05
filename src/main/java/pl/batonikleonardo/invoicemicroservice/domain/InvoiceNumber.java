@@ -2,7 +2,7 @@ package pl.batonikleonardo.invoicemicroservice.domain;
 
 import java.util.Objects;
 
-final class InvoiceNumber {
+public final class InvoiceNumber {
     private final String value;
 
     InvoiceNumber(String value) throws IncorrectInvoiceNumberException {

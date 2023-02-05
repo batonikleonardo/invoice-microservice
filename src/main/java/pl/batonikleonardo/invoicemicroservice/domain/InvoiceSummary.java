@@ -31,7 +31,7 @@ final class InvoiceSummary {
         return taxValue;
     }
 
-    public double taxValueAsDouble() {
+    double taxValueAsDouble() {
         return taxValue.doubleValue();
     }
 
@@ -56,11 +56,11 @@ final class InvoiceSummary {
                 "taxValue=" + taxValue + ']';
     }
 
-    public BigDecimal subtotal() {
+    BigDecimal subtotal() {
         return invoiceItems.totalPrice();
     }
 
-    public BigDecimal total() {
+    BigDecimal total() {
         final BigDecimal calculatedTaxValue = invoiceItems.totalPrice().multiply(this.taxValue).movePointLeft(2);
         return invoiceItems.totalPrice().add(calculatedTaxValue);
     }
