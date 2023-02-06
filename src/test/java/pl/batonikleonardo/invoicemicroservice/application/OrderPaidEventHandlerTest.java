@@ -32,7 +32,7 @@ class OrderPaidEventHandlerTest {
         //given
         final OrderPaidEventHandler orderPaidEventHandler = new OrderPaidEventHandler(invoiceFacade) {
             @Override
-            void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectSourceOrderIdException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
+            protected void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectSourceOrderIdException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
                 super.handle(orderPaidEvent);
             }
         };
@@ -49,7 +49,7 @@ class OrderPaidEventHandlerTest {
         final OrderPaidEventEntity client = new OrderPaidEventEntity("client name", "cient.email@mail.test", "344576767876812332", clientAddress);
 
         final InvoiceInformation invoiceCompany = new InvoiceInformation("company name", "comapany.email@mail.test", "address1", "city", "56-900", "province1", "country1", "34457676787686867");
-        final InvoiceInformation invoiceClient = new InvoiceInformation("client name", "cient.email@mail.test", "address2", "city2", "54-900", "province10", "country1","344576767876812332");
+        final InvoiceInformation invoiceClient = new InvoiceInformation("client name", "cient.email@mail.test", "address2", "city2", "54-900", "province10", "country1", "344576767876812332");
 
         final BigDecimal brushPrice = BigDecimal.valueOf(125);
         final BigDecimal pastePrice = BigDecimal.valueOf(30);

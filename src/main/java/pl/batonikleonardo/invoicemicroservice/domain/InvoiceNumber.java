@@ -1,24 +1,16 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
-import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectInvoiceNumberException;
-
 import java.util.Objects;
 
 public final class InvoiceNumber {
     private final String value;
 
-    InvoiceNumber(String value) throws IncorrectInvoiceNumberException {
-        selfValidation(value);
+    public InvoiceNumber(String value) {
         this.value = value;
     }
 
     String value() {
         return value;
-    }
-
-    private void selfValidation(String value) throws IncorrectInvoiceNumberException {
-        if (Objects.isNull(value) || value.isBlank())
-            throw new IncorrectInvoiceNumberException(value);
     }
 
     @Override

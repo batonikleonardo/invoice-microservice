@@ -3,7 +3,7 @@ package pl.batonikleonardo.invoicemicroservice.domain;
 import java.time.Instant;
 import java.util.List;
 
-class InvoiceCreatedEvent {
+public class InvoiceCreatedEvent {
     private final Instant createdTime;
     private final InvoiceNumber invoiceNumber;
     private final InvoiceDate issuedDate;
@@ -66,5 +66,13 @@ class InvoiceCreatedEvent {
 
     public SourceOrderId getSourceOrderId() {
         return sourceOrderId;
+    }
+
+    public Long getSourceOrderIdValue() {
+        return sourceOrderId.value();
+    }
+
+    public String getInvoiceNumberValue() {
+        return invoiceNumber.value();
     }
 }
