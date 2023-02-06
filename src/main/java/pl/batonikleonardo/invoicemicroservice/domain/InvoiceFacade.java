@@ -19,8 +19,14 @@ public class InvoiceFacade {
     }
 
     public void processInvoice(InvoiceCreateCommand invoiceCreateCommand) throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException {
-        log.info("Process invoice command = " + invoiceCreateCommand.toString());
-        Invoice invoice = buildInvoiceFromCreateCommand(invoiceCreateCommand);
+        log.debug("Process invoice command = " + invoiceCreateCommand.toString());
+
+        InvoiceNumber invoiceNumber = invoiceNumberCalculator.calculate(invoiceCreateCommand.issuedDate());
+        final InvoiceNumberAssignedToOrderEvent invoiceNumberAssignedToOrderEvent
+                = new InvoiceNumberAssignedToOrderEvent(invoiceCreateCommand.sourceOrderId(), invoiceNumber);
+        invoiceEventStorage.store(invoiceNumberAssignedToOrderEvent);
+
+        Invoice invoice = buildInvoiceFromCreateCommand(invoiceCreateCommand, invoiceNumber);
 
         InvoiceCreatedEvent invoiceCreatedEvent = InvoiceCreatedEvent.of(invoice);
         invoiceEventStorage.store(invoiceCreatedEvent);
@@ -28,9 +34,7 @@ public class InvoiceFacade {
         invoicePublisher.publish(invoice);
     }
 
-    private Invoice buildInvoiceFromCreateCommand(InvoiceCreateCommand invoiceCreateCommand) throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException {
-
-        InvoiceNumber invoiceNumber = invoiceNumberCalculator.calculate(invoiceCreateCommand.issuedDate());
+    private Invoice buildInvoiceFromCreateCommand(InvoiceCreateCommand invoiceCreateCommand, InvoiceNumber invoiceNumber) throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException {
         InvoiceDate paymentTerm = invoicePaymentTermCalculator.calculate(invoiceCreateCommand.issuedDate());
 
         return Invoice.builder()

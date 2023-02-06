@@ -215,4 +215,8 @@ public class Invoice {
     public int hashCode() {
         return Objects.hash(invoiceNumber, issuedDate, paymentTerm, company, client, invoiceItems, invoiceSummary, sourceOrderId);
     }
+
+    public String numberAsString() {
+        return invoiceNumber.value();
+    }
 }

@@ -17,7 +17,7 @@ public abstract class OrderPaidEventHandler {
     }
 
     protected void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectSourceOrderIdException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
-        log.info("Input order paid event = " + orderPaidEvent.toString());
+        log.debug("Input order paid event = " + orderPaidEvent.toString());
         final InvoiceCreateCommand invoiceCreateCommand = map(orderPaidEvent);
         invoiceFacade.processInvoice(invoiceCreateCommand);
     }

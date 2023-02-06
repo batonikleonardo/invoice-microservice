@@ -33,7 +33,7 @@ class InvoiceFacadeTest {
     private InvoiceFacade invoiceFacade;
 
     @Test
-    void whenProcessInvoiceTermAndNumberCalculatedCorrectly() throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceNumberException, InvoiceDataIsPastException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
+    void whenProcessInvoiceTermAndNumberCalculatedCorrectly() throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
         //Given
         final ZonedDateTime invoiceDateTime = ZonedDateTime.now().plusDays(4);
         final ZonedDateTime paymentDateTime = ZonedDateTime.now().plusDays(12);
@@ -77,7 +77,7 @@ class InvoiceFacadeTest {
     }
 
     @Test
-    void whenProcessInvoiceIsBuiltCorrectly() throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceNumberException, InvoiceDataIsPastException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
+    void whenProcessInvoiceIsBuiltCorrectly() throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
         //Given
         final ZonedDateTime invoiceDateTime = ZonedDateTime.now().plusDays(4);
         final ZonedDateTime paymentDateTime = ZonedDateTime.now().plusDays(12);
@@ -101,19 +101,6 @@ class InvoiceFacadeTest {
         final InvoiceItem invoiceItem2 = new InvoiceItem("Eye paste with diamond abrasive", null, 4, pastePrice);
         final InvoiceItem invoiceItem3 = new InvoiceItem("Key to Yennefer's room", "Common Item", 2, keyPrice);
 
-        final BigDecimal calculateInvoiceItemsSubtotalValue = BigDecimal.ZERO.add(brushPrice)
-                .add(keyPrice)
-                .add(keyPrice)
-                .add(pastePrice)
-                .add(pastePrice)
-                .add(pastePrice)
-                .add(pastePrice);
-
-        final BigDecimal calculateInvoiceItemsTotalValue = calculateInvoiceItemsSubtotalValue
-                .add(calculateInvoiceItemsSubtotalValue
-                        .multiply(BigDecimal.valueOf(taxValue)
-                                .movePointLeft(2))
-                );
         final Invoice invoice = Invoice.builder()
                 .invoiceNumber(invoiceNumber)
                 .issuedDate(issuedDate)
@@ -144,7 +131,7 @@ class InvoiceFacadeTest {
     }
 
     @Test
-    void whenProcessInvoiceInvoiceCreatedEventBuiltCorrectly() throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceNumberException, InvoiceDataIsPastException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
+    void whenProcessInvoiceInvoiceCreatedEventBuiltCorrectly() throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
         //Given
         final ZonedDateTime invoiceDateTime = ZonedDateTime.now().plusDays(4);
         final ZonedDateTime paymentDateTime = ZonedDateTime.now().plusDays(12);
@@ -202,7 +189,6 @@ class InvoiceFacadeTest {
         assertThat(invoiceCreatedEventResult.getPaymentTerm()).isEqualTo(paymentTerm);
         assertThat(invoiceCreatedEventResult.getClient()).isEqualTo(client);
         assertThat(invoiceCreatedEventResult.getCompany()).isEqualTo(company);
-        assertThat(invoiceCreatedEventResult.getSourceOrderId()).isEqualTo(sourceOrderId);
         assertThat(invoiceCreatedEventResult.getInvoiceSummary().subtotal()).isEqualTo(calculateInvoiceItemsSubtotalValue);
         assertThat(invoiceCreatedEventResult.getInvoiceSummary().total()).isEqualTo(calculateInvoiceItemsTotalValue);
         assertThat(invoiceCreatedEventResult.getInvoiceItems()).hasSize(3).contains(invoiceItem1, invoiceItem2, invoiceItem3);

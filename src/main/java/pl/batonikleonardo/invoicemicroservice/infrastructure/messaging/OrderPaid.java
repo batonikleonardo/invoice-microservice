@@ -10,7 +10,7 @@ class OrderPaid {
     private long orderId;
     private double taxValue;
     private ZonedDateTime date;
-    private OrderPaidEntity client;
-    private OrderPaidEntity company;
-    private List<OrderPaidItem> items;
+    private Entity client;
+    private Entity company;
+    private List<Item> items;
 }
