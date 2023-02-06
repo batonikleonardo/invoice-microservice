@@ -4,7 +4,11 @@ public class InvoiceFacadeBuilder {
     private InvoiceFacadeBuilder() {
     }
 
-    public static InvoiceFacade create(InvoiceNumberCalculator invoiceNumberCalculator, InvoicePaymentTermCalculator invoicePaymentTermCalculator, CreatedInvoicePublisher invoicePublisher, InvoiceEventStorage invoiceEventStorage) {
-        return new InvoiceFacade(invoiceNumberCalculator, invoicePaymentTermCalculator, invoicePublisher, invoiceEventStorage);
+    public static InvoiceFacade create(InvoiceNumberCalculator invoiceNumberCalculator,
+                                       InvoicePaymentTermCalculator paymentTermCalculator,
+                                       CreatedInvoicePublisher invoicePublisher,
+                                       InvoiceEventStorage invoiceEventStorage) {
+
+        return new InvoiceFacade(invoiceNumberCalculator, paymentTermCalculator, invoicePublisher, invoiceEventStorage);
     }
 }

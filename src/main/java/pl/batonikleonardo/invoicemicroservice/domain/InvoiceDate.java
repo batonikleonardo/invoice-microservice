@@ -1,7 +1,5 @@
 package pl.batonikleonardo.invoicemicroservice.domain;
 
-import pl.batonikleonardo.invoicemicroservice.domain.exception.InvoiceDataIsPastException;
-
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -10,7 +8,6 @@ public final class InvoiceDate {
     private final ZonedDateTime invoiceDateTime;
 
     public InvoiceDate(ZonedDateTime invoiceDateTime) {
-//        selfValidation(invoiceDateTime);
         this.invoiceDateTime = invoiceDateTime;
     }
 
@@ -32,11 +29,6 @@ public final class InvoiceDate {
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (InvoiceDate) obj;
         return Objects.equals(this.invoiceDateTime, that.invoiceDateTime);
-    }
-
-    private void selfValidation(ZonedDateTime invoiceDateTime) throws InvoiceDataIsPastException {
-        if (ZonedDateTime.now().isAfter(invoiceDateTime))
-            throw new InvoiceDataIsPastException(invoiceDateTime);
     }
 
     @Override

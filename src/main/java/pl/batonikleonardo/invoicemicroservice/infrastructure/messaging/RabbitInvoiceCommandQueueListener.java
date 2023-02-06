@@ -19,14 +19,15 @@ class RabbitInvoiceCommandQueueListener extends OrderPaidEventHandler {
     }
 
     @RabbitListener(queues = RabbitConfiguration.INVOICE_COMMAND_QUEUE)
-    public void handle(String inputMessage) throws IncorrectSourceOrderIdException, InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException, JsonProcessingException {
-        log.debug("Message read from myQueue : " + inputMessage);
+    public void handle(String inputMessage) throws IncorrectSourceOrderIdException, InvoiceDataIsPastException,
+            IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectInvoiceSummaryException,
+            InvoiceMissingOrIncorrectFieldException, JsonProcessingException {
 
+        log.debug("Message read from myQueue : " + inputMessage);
         final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
         final OrderPaid orderPaid = objectMapper.readValue(inputMessage, OrderPaid.class);
 
         log.debug("Parsed command : " + orderPaid.toString());
-
         OrderPaidEvent orderPaidEvent = OrderPaidEventMapper.map(orderPaid);
         handle(orderPaidEvent);
     }

@@ -18,16 +18,18 @@ public abstract class OrderPaidEventHandler {
 
     protected void handle(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException, IncorrectSourceOrderIdException, InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
         log.debug("Input order paid event = " + orderPaidEvent.toString());
+
         final InvoiceCreateCommand invoiceCreateCommand = map(orderPaidEvent);
         invoiceFacade.processInvoice(invoiceCreateCommand);
     }
 
-    private InvoiceCreateCommand map(OrderPaidEvent orderPaidEvent) throws InvoiceDataIsPastException, IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
-        InvoiceDate issuedDate = new InvoiceDate(orderPaidEvent.paidDate());
+    private InvoiceCreateCommand map(OrderPaidEvent orderPaidEvent) throws IncorrectSourceOrderIdException, IncorrectInvoiceInformationPartException, IncorrectInvoiceItemException {
         InvoiceInformation company = mapInvoiceInformation(orderPaidEvent.company());
         InvoiceInformation client = mapInvoiceInformation(orderPaidEvent.client());
         List<InvoiceItem> invoiceItems = mapItems(orderPaidEvent.items());
+
         SourceOrderId sourceOrderId = new SourceOrderId(orderPaidEvent.orderId());
+        InvoiceDate issuedDate = new InvoiceDate(orderPaidEvent.paidDate());
         return new InvoiceCreateCommand(issuedDate, company, client, invoiceItems, orderPaidEvent.tax(), sourceOrderId);
     }
 
