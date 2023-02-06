@@ -1,5 +1,7 @@
 package pl.batonikleonardo.invoicemicroservice.infrastructure.storage;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import pl.batonikleonardo.invoicemicroservice.domain.InvoiceCreatedEvent;
 import pl.batonikleonardo.invoicemicroservice.domain.InvoiceInformation;
 import pl.batonikleonardo.invoicemicroservice.domain.InvoiceItem;
@@ -7,6 +9,7 @@ import pl.batonikleonardo.invoicemicroservice.domain.InvoiceSummary;
 
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class InvoiceCreatedEventDocumentMapper {
     static InvoiceCreatedEventDocument map(InvoiceCreatedEvent invoiceCreatedEvent) {
         InvoiceCreatedEventDocument invoiceCreatedEventDocument = new InvoiceCreatedEventDocument();

@@ -16,8 +16,12 @@ public class InvoiceMicroserviceApplication {
     }
 
     @Bean
-    InvoiceFacade invoiceFacade(InvoiceNumberCalculator invoiceNumberCalculator, InvoicePaymentTermCalculator invoicePaymentTermCalculator, CreatedInvoicePublisher invoicePublisher, InvoiceEventStorage invoiceEventStorage) {
-        return InvoiceFacadeBuilder.create(invoiceNumberCalculator, invoicePaymentTermCalculator, invoicePublisher, invoiceEventStorage);
+    InvoiceFacade invoiceFacade(InvoiceNumberCalculator numberCalculator,
+                                InvoicePaymentTermCalculator paymentTermCalculator,
+                                CreatedInvoicePublisher invoicePublisher,
+                                InvoiceEventStorage eventStorage) {
+
+        return InvoiceFacadeBuilder.create(numberCalculator, paymentTermCalculator, invoicePublisher, eventStorage);
     }
 
 }

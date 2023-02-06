@@ -16,6 +16,7 @@ public final class InvoiceInformation {
 
     public InvoiceInformation(String name, String email, String address, String city, String postalCode, String province,
                               String country, String taxIdentificationNumber) throws IncorrectInvoiceInformationPartException {
+
         selfValidation(name, email, address, city, postalCode, province, country, taxIdentificationNumber);
         this.name = name;
         this.email = email;
@@ -60,7 +61,9 @@ public final class InvoiceInformation {
         return taxIdentificationNumber;
     }
 
-    private void selfValidation(String name, String email, String address, String city, String postalCode, String province, String country, String taxIdentificationNumber) throws IncorrectInvoiceInformationPartException {
+    private void selfValidation(String name, String email, String address, String city, String postalCode, String province,
+                                String country, String taxIdentificationNumber) throws IncorrectInvoiceInformationPartException {
+
         //TODO update this simple validation to something more correct
         if (isNotValid(name)) {
             throw new IncorrectInvoiceInformationPartException("Name", name);

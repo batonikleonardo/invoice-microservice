@@ -13,7 +13,10 @@ public class InvoiceCreatedEvent {
     private final InvoiceItems invoiceItems;
     private final InvoiceSummary invoiceSummary;
 
-    private InvoiceCreatedEvent(Instant createdTime, InvoiceNumber invoiceNumber, InvoiceDate issuedDate, InvoiceDate paymentTerm, InvoiceInformation company, InvoiceInformation client, InvoiceItems invoiceItems, InvoiceSummary invoiceSummary) {
+    private InvoiceCreatedEvent(Instant createdTime, InvoiceNumber invoiceNumber, InvoiceDate issuedDate,
+                                InvoiceDate paymentTerm, InvoiceInformation company, InvoiceInformation client,
+                                InvoiceItems invoiceItems, InvoiceSummary invoiceSummary) {
+
         this.createdTime = createdTime;
         this.invoiceNumber = invoiceNumber;
         this.issuedDate = issuedDate;

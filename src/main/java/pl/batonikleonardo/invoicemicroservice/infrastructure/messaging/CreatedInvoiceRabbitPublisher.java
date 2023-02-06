@@ -26,6 +26,7 @@ class CreatedInvoiceRabbitPublisher implements CreatedInvoicePublisher {
     @Override
     public void publish(Invoice invoice) {
         log.debug("Invoice to process : " + invoice.toString());
+
         try {
             RabbitInvoiceCreatedEvent invoiceCreatedEvent = RabbitInvoiceCreatedEvent.of(invoice);
             final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();

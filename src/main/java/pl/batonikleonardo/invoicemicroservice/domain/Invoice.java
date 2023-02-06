@@ -18,7 +18,10 @@ public class Invoice {
     private final InvoiceSummary invoiceSummary;
     private final SourceOrderId sourceOrderId;
 
-    Invoice(InvoiceNumber invoiceNumber, InvoiceInformation company, InvoiceInformation client, InvoiceDate issuedDate, InvoiceDate paymentTerm, InvoiceItems invoiceItems, double taxValue, SourceOrderId sourceOrderId) throws InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
+    Invoice(InvoiceNumber invoiceNumber, InvoiceInformation company, InvoiceInformation client, InvoiceDate issuedDate,
+            InvoiceDate paymentTerm, InvoiceItems invoiceItems, double taxValue, SourceOrderId sourceOrderId)
+            throws InvoiceMissingOrIncorrectFieldException, IncorrectInvoiceSummaryException {
+
         selfValidation(invoiceNumber, company, client, issuedDate, paymentTerm, invoiceItems, taxValue, sourceOrderId);
         this.invoiceNumber = invoiceNumber;
         this.company = company;
@@ -30,7 +33,10 @@ public class Invoice {
         this.sourceOrderId = sourceOrderId;
     }
 
-    private void selfValidation(InvoiceNumber invoiceNumber, InvoiceInformation company, InvoiceInformation client, InvoiceDate issuedDate, InvoiceDate paymentTerm, InvoiceItems invoiceItems, double taxValue, SourceOrderId sourceOrderId) throws InvoiceMissingOrIncorrectFieldException {
+    private void selfValidation(InvoiceNumber invoiceNumber, InvoiceInformation company, InvoiceInformation client,
+                                InvoiceDate issuedDate, InvoiceDate paymentTerm, InvoiceItems invoiceItems, double taxValue,
+                                SourceOrderId sourceOrderId) throws InvoiceMissingOrIncorrectFieldException {
+
         if (Objects.isNull(invoiceNumber)) {
             throw new InvoiceMissingOrIncorrectFieldException("invoice number");
         }
@@ -186,6 +192,10 @@ public class Invoice {
         return invoiceNumber;
     }
 
+    public String numberAsString() {
+        return invoiceNumber.value();
+    }
+
     public SourceOrderId sourceOrderId() {
         return sourceOrderId;
     }
@@ -214,9 +224,5 @@ public class Invoice {
     @Override
     public int hashCode() {
         return Objects.hash(invoiceNumber, issuedDate, paymentTerm, company, client, invoiceItems, invoiceSummary, sourceOrderId);
-    }
-
-    public String numberAsString() {
-        return invoiceNumber.value();
     }
 }

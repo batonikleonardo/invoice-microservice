@@ -11,14 +11,20 @@ public class InvoiceFacade {
     private final CreatedInvoicePublisher invoicePublisher;
     private final InvoiceEventStorage invoiceEventStorage;
 
-    public InvoiceFacade(InvoiceNumberCalculator invoiceNumberCalculator, InvoicePaymentTermCalculator invoicePaymentTermCalculator, CreatedInvoicePublisher invoicePublisher, InvoiceEventStorage invoiceEventStorage) {
+    public InvoiceFacade(InvoiceNumberCalculator invoiceNumberCalculator,
+                         InvoicePaymentTermCalculator invoicePaymentTermCalculator,
+                         CreatedInvoicePublisher invoicePublisher,
+                         InvoiceEventStorage invoiceEventStorage) {
+
         this.invoiceNumberCalculator = invoiceNumberCalculator;
         this.invoicePaymentTermCalculator = invoicePaymentTermCalculator;
         this.invoicePublisher = invoicePublisher;
         this.invoiceEventStorage = invoiceEventStorage;
     }
 
-    public void processInvoice(InvoiceCreateCommand invoiceCreateCommand) throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException {
+    public void processInvoice(InvoiceCreateCommand invoiceCreateCommand)
+            throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException {
+
         log.debug("Process invoice command = " + invoiceCreateCommand.toString());
 
         InvoiceNumber invoiceNumber = invoiceNumberCalculator.calculate(invoiceCreateCommand.issuedDate());
@@ -34,7 +40,9 @@ public class InvoiceFacade {
         invoicePublisher.publish(invoice);
     }
 
-    private Invoice buildInvoiceFromCreateCommand(InvoiceCreateCommand invoiceCreateCommand, InvoiceNumber invoiceNumber) throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException {
+    private Invoice buildInvoiceFromCreateCommand(InvoiceCreateCommand invoiceCreateCommand, InvoiceNumber invoiceNumber)
+            throws IncorrectInvoiceSummaryException, InvoiceMissingOrIncorrectFieldException {
+
         InvoiceDate paymentTerm = invoicePaymentTermCalculator.calculate(invoiceCreateCommand.issuedDate());
 
         return Invoice.builder()

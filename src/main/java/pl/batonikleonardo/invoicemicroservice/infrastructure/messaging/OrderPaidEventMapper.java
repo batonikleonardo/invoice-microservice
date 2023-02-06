@@ -8,7 +8,6 @@ import pl.batonikleonardo.invoicemicroservice.application.OrderPaidEventEntity;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class OrderPaidEventMapper {
