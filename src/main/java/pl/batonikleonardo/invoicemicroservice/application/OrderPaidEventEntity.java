@@ -2,18 +2,23 @@ package pl.batonikleonardo.invoicemicroservice.application;
 
 import java.util.Objects;
 
-final class OrderPaidEventEntity {
+public final class OrderPaidEventEntity {
     private final String name;
     private final String email;
     private final String taxIdentificationNumber;
     private final OrderPaidEventAddress orderPaidEventAddress;
 
-    OrderPaidEventEntity(String name, String email, String taxIdentificationNumber,
-                         OrderPaidEventAddress orderPaidEventAddress) {
+    public OrderPaidEventEntity(String name, String email, String taxIdentificationNumber,
+                                OrderPaidEventAddress orderPaidEventAddress) {
         this.name = name;
         this.email = email;
         this.taxIdentificationNumber = taxIdentificationNumber;
         this.orderPaidEventAddress = orderPaidEventAddress;
+    }
+
+    public static OrderPaidEventEntity create(String name, String email, String taxIdentificationNumber, String address, String city, String postalCode, String province, String country) {
+        final OrderPaidEventAddress eventAddress = new OrderPaidEventAddress(address, city, postalCode, province, country);
+        return new OrderPaidEventEntity(name, email, taxIdentificationNumber, eventAddress);
     }
 
     public String name() {

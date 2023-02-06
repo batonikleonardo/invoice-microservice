@@ -5,7 +5,7 @@ import pl.batonikleonardo.invoicemicroservice.domain.exception.InvoiceMissingOrI
 
 import java.util.List;
 
-class InvoiceBuilder {
+public class InvoiceBuilder {
     private InvoiceNumber invoiceNumber;
     private InvoiceDate issuedDate;
     private InvoiceDate paymentTerm;

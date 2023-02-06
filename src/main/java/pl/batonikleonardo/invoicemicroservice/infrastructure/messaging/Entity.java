@@ -3,7 +3,7 @@ package pl.batonikleonardo.invoicemicroservice.infrastructure.messaging;
 import lombok.Data;
 
 @Data
-class OrderPaidEntity {
+class Entity {
     private String name;
     private String email;
     private String address;

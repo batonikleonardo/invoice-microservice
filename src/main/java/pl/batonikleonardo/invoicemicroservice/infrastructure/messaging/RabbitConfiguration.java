@@ -8,10 +8,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class RabbitConfiguration {
 
-    public static final String INVOICE_COMMAND_QUEUE = "queue.invoice.command";
+    static final String INVOICE_COMMAND_QUEUE = "queue.invoice.command";
+    private static final String INVOICE_QUEUE = "queue.invoice";
 
     @Bean
-    public Queue myQueue() {
+    public Queue invoiceCommandQueue() {
         return new Queue(INVOICE_COMMAND_QUEUE, true);
+    }
+    @Bean
+    public Queue invoiceQueue() {
+        return new Queue(INVOICE_QUEUE, true);
     }
 }

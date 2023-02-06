@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document
+@Document(collection = "invoiceDocument")
 @Data
 class InvoiceCreatedEventDocument {
     @Id
@@ -20,6 +20,5 @@ class InvoiceCreatedEventDocument {
     private InvoiceCreatedEventEntity client;
     private List<InvoiceCreatedEventItem> items;
     private InvoiceCreatedEventSummary summary;
-    private Long sourceOrderId;
 }
 

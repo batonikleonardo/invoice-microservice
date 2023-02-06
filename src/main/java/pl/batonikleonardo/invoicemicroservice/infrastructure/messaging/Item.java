@@ -5,9 +5,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-class OrderPaidItem {
+class Item {
     private String name;
     private String description;
-    private BigDecimal quantity;
+    private int quantity;
     private BigDecimal price;
 }

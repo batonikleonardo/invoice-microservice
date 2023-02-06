@@ -1,0 +1,43 @@
+{
+  "orderId": 100,
+  "taxValue": 20,
+  "date": "2023-02-06T10:18:47.723Z",
+  "company": {
+    "name": "company name",
+    "email": "comapany.email@mail.test",
+    "address": "address1",
+    "city": "city",
+    "postalCode": "56-900",
+    "province": "province1",
+    "country": "country1",
+    "taxIdentificationNumber": "34457676787686867"
+  },
+  "client": {
+    "name": "client name",
+    "email": "cient.email@mail.test",
+    "address": "address2",
+    "city": "city2",
+    "postalCode": "54-900",
+    "province": "province10",
+    "country": "country1",
+    "taxIdentificationNumber": "344576767876812332"
+  },
+  "items": [
+    {
+      "name": "Eye cleaning brush",
+      "quantity": 1,
+      "price": "125"
+    },
+    {
+      "name": "Eye paste with diamond abrasive",
+      "quantity": 4,
+      "price": "120"
+    },
+    {
+      "name": "Key to Yennefer's room",
+      "description": "Common Item",
+      "quantity": 2,
+      "price": "4"
+    }
+  ]
+}

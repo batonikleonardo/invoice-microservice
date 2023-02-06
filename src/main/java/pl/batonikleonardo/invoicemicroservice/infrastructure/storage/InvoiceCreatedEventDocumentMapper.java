@@ -6,7 +6,6 @@ import pl.batonikleonardo.invoicemicroservice.domain.InvoiceItem;
 import pl.batonikleonardo.invoicemicroservice.domain.InvoiceSummary;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 class InvoiceCreatedEventDocumentMapper {
     static InvoiceCreatedEventDocument map(InvoiceCreatedEvent invoiceCreatedEvent) {
@@ -14,7 +13,6 @@ class InvoiceCreatedEventDocumentMapper {
 
         invoiceCreatedEventDocument.setNumber(invoiceCreatedEvent.getInvoiceNumberValue());
         invoiceCreatedEventDocument.setCreatedTime(invoiceCreatedEvent.getCreatedTime());
-        invoiceCreatedEventDocument.setSourceOrderId(invoiceCreatedEvent.getSourceOrderIdValue());
         //Added bug to fix later, missing zone data
         invoiceCreatedEventDocument.setPaymentTerm(invoiceCreatedEvent.getPaymentTerm().value().toLocalDateTime());
         invoiceCreatedEventDocument.setIssuedDate(invoiceCreatedEvent.getIssuedDate().value().toLocalDateTime());
@@ -53,7 +51,7 @@ class InvoiceCreatedEventDocumentMapper {
     private static List<InvoiceCreatedEventItem> mapItems(List<InvoiceItem> invoiceItems) {
         return invoiceItems.stream()
                 .map(InvoiceCreatedEventDocumentMapper::mapItem)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private static InvoiceCreatedEventItem mapItem(InvoiceItem invoiceItem) {
