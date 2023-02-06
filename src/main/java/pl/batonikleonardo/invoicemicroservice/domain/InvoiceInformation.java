@@ -28,35 +28,35 @@ public final class InvoiceInformation {
     }
 
 
-    String name() {
+    public String name() {
         return name;
     }
 
-    String email() {
+    public String email() {
         return email;
     }
 
-    String address() {
+    public String address() {
         return address;
     }
 
-    String city() {
+    public String city() {
         return city;
     }
 
-    String postalCode() {
+    public String postalCode() {
         return postalCode;
     }
 
-    String province() {
+    public String province() {
         return province;
     }
 
-    String country() {
+    public String country() {
         return country;
     }
 
-    String taxIdentificationNumber() {
+    public String taxIdentificationNumber() {
         return taxIdentificationNumber;
     }
 

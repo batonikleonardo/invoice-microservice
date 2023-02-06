@@ -5,7 +5,7 @@ import pl.batonikleonardo.invoicemicroservice.domain.exception.IncorrectInvoiceS
 import java.math.BigDecimal;
 import java.util.Objects;
 
-final class InvoiceSummary {
+public final class InvoiceSummary {
     private final InvoiceItems invoiceItems;
     private final BigDecimal taxValue;
 
@@ -29,15 +29,15 @@ final class InvoiceSummary {
         return taxValue;
     }
 
-    double taxValueAsDouble() {
+    public double taxValueAsDouble() {
         return taxValue.doubleValue();
     }
 
-    BigDecimal subtotal() {
+    public BigDecimal subtotal() {
         return invoiceItems.totalPrice();
     }
 
-    BigDecimal total() {
+    public BigDecimal total() {
         final BigDecimal calculatedTaxValue = invoiceItems.totalPrice().multiply(this.taxValue).movePointLeft(2);
         return invoiceItems.totalPrice().add(calculatedTaxValue);
     }

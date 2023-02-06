@@ -4,22 +4,26 @@ import pl.batonikleonardo.invoicemicroservice.domain.exception.InvoiceDataIsPast
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 public final class InvoiceDate {
     private final ZonedDateTime invoiceDateTime;
 
-    public InvoiceDate(ZonedDateTime invoiceDateTime) throws InvoiceDataIsPastException {
+    public InvoiceDate(ZonedDateTime invoiceDateTime) {
 //        selfValidation(invoiceDateTime);
         this.invoiceDateTime = invoiceDateTime;
     }
 
-    private void selfValidation(ZonedDateTime invoiceDateTime) throws InvoiceDataIsPastException {
-        if (ZonedDateTime.now().isAfter(invoiceDateTime))
-            throw new InvoiceDataIsPastException(invoiceDateTime);
+    public InvoiceDate plus(int days) {
+        return new InvoiceDate(invoiceDateTime.plusDays(days));
     }
 
     ZonedDateTime invoiceDateTime() {
         return invoiceDateTime;
+    }
+
+    public String asSlashSequenceWithUUID(UUID randomUUID) {
+        return invoiceDateTime.toString() + "/" + randomUUID;
     }
 
     @Override
@@ -28,6 +32,11 @@ public final class InvoiceDate {
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (InvoiceDate) obj;
         return Objects.equals(this.invoiceDateTime, that.invoiceDateTime);
+    }
+
+    private void selfValidation(ZonedDateTime invoiceDateTime) throws InvoiceDataIsPastException {
+        if (ZonedDateTime.now().isAfter(invoiceDateTime))
+            throw new InvoiceDataIsPastException(invoiceDateTime);
     }
 
     @Override
@@ -41,5 +50,7 @@ public final class InvoiceDate {
                 "invoiceDateTime=" + invoiceDateTime + ']';
     }
 
-
+    public ZonedDateTime value() {
+        return invoiceDateTime;
+    }
 }
